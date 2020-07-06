@@ -11,7 +11,7 @@ app = Flask(__name__)
 keywords_api = get_keywords_api()
 
 # Define a post method for our API.
-@app.route('/extractpackages', methods=['POST'])
+@app.route('/', methods=['POST'])
 def extractpackages():
     """ 
     Takes in a json file, extracts the keywords &
