@@ -1,4 +1,4 @@
-## This is a api of covid-19 data
+## This is a api python flask code
 
 
 * **serve.py**: This is the file where the functions and models are.
