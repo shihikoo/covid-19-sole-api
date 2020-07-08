@@ -1,17 +1,70 @@
-openapi: "3.0.0"
-
+openapi: 3.0.0
 info:
-  title: "Useless sample api"
-  description: "A simple api that returns a 200 if you ping it."
-  version: "1.0"
-
+  title: Covid-19-sole Data Extraction
+  description: Covid-19-sole API
+  contact:
+    email: multipart.camarades@gmail.com
+  license:
+    name: Creative Commons 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  version: 0.1.1
+servers:
+- url: https://virtserver.swaggerhub.com/shihikoo/test/
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: covid
+  description: covid data download
 paths:
-  /ping:
+  /study:
     get:
+      tags:
+      - covid
+      summary: download studies
+      description: |
+        You can get all studies avaliable
+      operationId: downloadStudies
+      parameters:
+      - name: searchString
+        in: query
+        description: pass an optional search string for looking up studies title and
+          abstract
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
-        '200':
-          description: OK
+        "200":
+          description: search results matching criteria
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                type: array
+                items:
+                  $ref: '#/components/schemas/Study'
+        "400":
+          description: bad input parameter
+components:
+  schemas:
+    Study:
+      required:
+      - abstract
+      - id
+      - publicationDate
+      - title
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        title:
+          type: string
+          example: Widget Adapter
+        abstract:
+          type: string
+          example: Widget Adapter
+        publicationDate:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
